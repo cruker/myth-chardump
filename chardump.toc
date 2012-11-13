@@ -5,17 +5,7 @@
 ## Version: 1.0
 ## SavedVariables: CHDMP_DATA, CHDMP_KEY
 
-aesluaglobal.lua
 
-aeslua\util.lua
-aeslua\gf.lua
-aeslua\buffer.lua
-aeslua\aes.lua
-aeslua\ciphermode.lua
-aeslua.lua
-
-b64.lua
-sha1.lua
 
 json\json.lua
 
