@@ -329,14 +329,15 @@ function private.Encode(tbl_in)
   i = i + 1
  end
 	local S=myJSON.encode(tbl_in);
-	cryptkey = Sha1(S);
-	local cipher = aeslua.encrypt(cryptkey,S);	
-	private.ILog("done.");
-	return b64_enc(cipher);
+	--cryptkey = Sha1(S);
+	--local cipher = aeslua.encrypt(cryptkey,S);	
+	--private.ILog("done.");
+	--return b64_enc(cipher);
+	return S;
 end
 
 function private.SaveCharData(data_in)
-	CHDMP_KEY=cryptkey
+	--CHDMP_KEY=cryptkey
 	CHDMP_DATA=data_in
 end
 
