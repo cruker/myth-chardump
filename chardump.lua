@@ -342,15 +342,40 @@ function private.SaveCharData(data_in)
 	CHDMP_DATA=data_in
 end
 
+function private.GetSkillID(name)
+end
+
 function private.LoadCharData()
 --Make GM commands here
 	local data = CHDMP_DATA or nil;
 	if data == nil then
 		print("Character dump not found");
 	else
-		data.spell
+		for section, tbl in pairs(data) do
+			if section == "spell" then
+				--parsing spell data
+				for id, _ in pairs(tbl) do
+					SendChatMessage(".learn "..id ,"SAY" ,nil ,nil);
+				end
+			elseif section == "critter" then
+				--parsing critter data (as spells)
+				for id, _ in pairs(tbl) do
+					SendChatMessage(".learn "..id ,"SAY" ,nil ,nil);
+				end
+			elseif section == "mount" then
+				--parsing mount data (as spells)
+				for id, _ in pairs(tbl) do
+					SendChatMessage(".learn "..id ,"SAY" ,nil ,nil);
+				end
+			elseif section == "skill" then
+				--parsing skill data
+				for _ , skillInf in pairs(tbl) do
+					--TODO: MAKE IT!
+				end
+			end
+		end
 	end
-end;
+end
 
 function private.TradeSkillFrame_OnShow_Hook(frame, force)
 	if private.done == true then
