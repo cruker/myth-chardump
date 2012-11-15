@@ -342,6 +342,16 @@ function private.SaveCharData(data_in)
 	CHDMP_DATA=data_in
 end
 
+function private.LoadCharData()
+--Make GM commands here
+	local data = CHDMP_DATA or nil;
+	if data == nil then
+		print("Character dump not found");
+	else
+		data.spell
+	end
+end;
+
 function private.TradeSkillFrame_OnShow_Hook(frame, force)
 	if private.done == true then
 		return
@@ -372,7 +382,13 @@ SlashCmdList["CHDMP"] = function(msg)
 		return;
 	elseif msg == "help" then
 		-- display help here
+		print("/chardump - make a dump");
+		print("/chardump help - you see it now");
+		print("/chardump load - load dump and apply it to your target(Admin rights needed)");
 		return;
+	elseif msg == "load" then
+		--loading SavedVariable and create GM commands
+		private.LoadCharData();
 	else
 		private.done = false;
 	end

@@ -3,7 +3,7 @@
 ## Author: 
 ## Notes: |TEnvironments\Stars\Nexus_data_curtain_blur:180:120|t
 ## Version: 1.0
-## SavedVariables: CHDMP_DATA, CHDMP_KEY
+## SavedVariables: CHDMP_DATA
 
 
 
