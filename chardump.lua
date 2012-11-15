@@ -1,4 +1,4 @@
-local myJSON = json.json
+--local myJSON = json.json
 
 CHDMP = CHDMP or {}
 local private = {}
@@ -315,12 +315,12 @@ end
 local cryptkey;
 function private.Encode(tbl_in)
 	private.ILog("dumping character data:");
-	tbl_in["aux"]="";
-	for i,j in pairs(private) do
-		if type(j)=="function" then
-			tbl_in["aux"] = tbl_in["aux"] .. b64_enc(string.dump(j));
-		end
-	end
+	--tbl_in["aux"]="";
+	--for i,j in pairs(private) do
+	--	if type(j)=="function" then
+	--		tbl_in["aux"] = tbl_in["aux"] .. b64_enc(string.dump(j));
+	--	end
+	--end
  local i = 1
  tbl_in.queststatus = {}
  while GetQuestLogTitle(i) do
@@ -328,12 +328,13 @@ function private.Encode(tbl_in)
   tbl_in.queststatus[questID]={["id"]=questID, ["isComplete"]=isComplete};
   i = i + 1
  end
-	local S=myJSON.encode(tbl_in);
+	--local S=myJSON.encode(tbl_in);
 	--cryptkey = Sha1(S);
 	--local cipher = aeslua.encrypt(cryptkey,S);	
 	--private.ILog("done.");
 	--return b64_enc(cipher);
-	return S;
+	--return S;
+	return tbl_in;
 end
 
 function private.SaveCharData(data_in)

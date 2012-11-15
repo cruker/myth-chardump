@@ -7,7 +7,6 @@
 
 
 
-json\json.lua
 
 datastore.lua
 chardump.lua
