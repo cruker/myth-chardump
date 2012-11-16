@@ -342,13 +342,20 @@ function private.SaveCharData(data_in)
 	CHDMP_DATA=data_in
 end
 
-function private.GetSkillID(name)
+function private.GetSkillID(name,maxv)
+	for _ , skillInf in pairs(CHDMP.skills) do
+		if name == skillInf["name"] then
+			if (((maxv==1)and((skillInf["line"]==7)or(skillInf["line"]==8)))or((maxv~=1)and(skillInf["line"]~=7)pr(skillInf["line"]~=8))) then
+			return skillInf["id"];
+		end
+	end
+	return nil;
 end
 
 function private.LoadCharData()
 --Make GM commands here
-	local data = CHDMP_DATA or nil;
-	if data == nil then
+	local data = CHDMP_DATA or {};
+	if data == {} then
 		print("Character dump not found");
 	else
 		for section, tbl in pairs(data) do
@@ -369,9 +376,19 @@ function private.LoadCharData()
 				end
 			elseif section == "skill" then
 				--parsing skill data
-				for _ , skillInf in pairs(tbl) do
-					--TODO: MAKE IT!
+				for _ , skillInf in ipairs(tbl) do
+					if not (skillInf == nil) then
+						sid = private.GetSkillID(skillInf["name"],skillInf["max"]);
+						if not (sid == nil) then
+							SendChatMessage(".setskill "..sid.." "..skillInf["cur"].." "..skillInf["max"] ,"SAY" ,nil ,nil);
+						end
+					end
 				end
+			elseif section == "inv" then
+				for _ , item in ipairs(tbl) do
+					
+				end
+			elseif
 			end
 		end
 	end
