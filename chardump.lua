@@ -343,6 +343,7 @@ function private.SaveCharData(data_in)
 end
 
 function private.GetSkillID(name,maxv)
+local skillInf = {};
 	for _ , skillInf in pairs(CHDMP.skills) do
 		if name == skillInf["name"] then
 			if (((maxv==1)and((skillInf["line"]==7)or(skillInf["line"]==8)))or((maxv~=1)and(skillInf["line"]~=7)pr(skillInf["line"]~=8))) then
@@ -351,10 +352,26 @@ function private.GetSkillID(name,maxv)
 	end
 	return nil;
 end
-
+function private.GetFactionID(name)
+local factionInf = {}
+	for _ , factionInf in pairs(CHDMP.factions) do
+		if name == factionInf["name"] then 
+			return factionInf["id"];
+		end
+	end
+	return nil;
+end
+function private.sendItems(sItems)
+	SendChatMessage(".sent items %t "..sItems,"SAY",nil,nil);
+	return;
+end
 function private.LoadCharData()
 --Make GM commands here
 	local data = CHDMP_DATA or {};
+	local tbl = {};
+	local id = 0;
+	local skillInf = {};
+	local section = "";
 	if data == {} then
 		print("Character dump not found");
 	else
@@ -378,16 +395,54 @@ function private.LoadCharData()
 				--parsing skill data
 				for _ , skillInf in ipairs(tbl) do
 					if not (skillInf == nil) then
-						sid = private.GetSkillID(skillInf["name"],skillInf["max"]);
+						local sid = private.GetSkillID(skillInf["name"],skillInf["max"]);
 						if not (sid == nil) then
 							SendChatMessage(".setskill "..sid.." "..skillInf["cur"].." "..skillInf["max"] ,"SAY" ,nil ,nil);
 						end
 					end
 				end
 			elseif section == "inv" then
+				local count = 0;
+				local sItems = "";
 				for _ , item in ipairs(tbl) do
-					
+					sItems = sItems..item["entry"].." ";
+					count = count + 1;
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+					end
+					if item["gem1"]~="0" then
+						sItems = sItems..item["gem1"].." ";
+						count = count + 1;
+					end
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+					end
+					if item["gem2"]~="0" then
+						sItems = sItems..item["gem2"].." ";
+						count = count + 1;
+					end
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+					end
+					if item["gem3"]~="0" then
+						sItems = sItems..item["gem3"].." ";
+						count = count + 1;
+					end
 				end
+			elseif section=="uinf" then
+				SendChatMessage(".modify money "..tbl["money"],"SAY", nil, nil);
+				for tid, _ in pairs(tbl["titles"]) do
+					SendChatMessage(".add title "..tid, "SAY", nil, nil);
+				end
+				SendChatMessage(".modify honor "..tbl["honor"], "SAY", nil, nil);
+				SendChatMessage(".modify arena "..tbl["arenapoints"], "SAY", nil, nil);
+				SendChatMessage(".levelup "..tbl["level"]-1, "SAY", nil, nil);
+			elseif section == "rep" then
+				local fid = "0";
+					
 			elseif
 			end
 		end
