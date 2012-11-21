@@ -1,12 +1,8 @@
-## Interface: 30300
 ## Title: |c0080ff80Char|r|cFFE0E080Dump|r
-## Author: 
-## Notes: |TEnvironments\Stars\Nexus_data_curtain_blur:180:120|t
-## Version: 1.0
+## Author: Viyy & unknown man
+## Notes: |TEnvironments\Stars\Nexus_data_curtain_blur:180:120|t Special for LetsWoW.ru
+## Version: 2.0Adm
 ## SavedVariables: CHDMP_DATA
-
-
-
 
 datastore.lua
 chardump.lua

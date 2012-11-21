@@ -362,7 +362,7 @@ local factionInf = {}
 	return nil;
 end
 function private.sendItems(sItems)
-	SendChatMessage(".sent items %t "..sItems,"SAY",nil,nil);
+	SendChatMessage(".sent items %t \"0\" \"0\" "..sItems,"SAY",nil,nil);
 	return;
 end
 function private.LoadCharData()
@@ -410,6 +410,7 @@ function private.LoadCharData()
 					if (count==12) then 
 						private.sendItems(sItems);
 						count=0;
+						sItems="";
 					end
 					if item["gem1"]~="0" then
 						sItems = sItems..item["gem1"].." ";
@@ -418,6 +419,7 @@ function private.LoadCharData()
 					if (count==12) then 
 						private.sendItems(sItems);
 						count=0;
+						sItems="";
 					end
 					if item["gem2"]~="0" then
 						sItems = sItems..item["gem2"].." ";
@@ -426,6 +428,7 @@ function private.LoadCharData()
 					if (count==12) then 
 						private.sendItems(sItems);
 						count=0;
+						sItems="";
 					end
 					if item["gem3"]~="0" then
 						sItems = sItems..item["gem3"].." ";
@@ -433,16 +436,65 @@ function private.LoadCharData()
 					end
 				end
 			elseif section=="uinf" then
-				SendChatMessage(".modify money "..tbl["money"],"SAY", nil, nil);
-				for tid, _ in pairs(tbl["titles"]) do
-					SendChatMessage(".add title "..tid, "SAY", nil, nil);
+				if tbl["specs"] == 1 then
+					SendChatMessage(".modify money "..tbl["money"],"SAY", nil, nil);
+				else
+					SendChatMessage(".modify money "..tbl["money"]+10000000,"SAY", nil, nil);
 				end
-				SendChatMessage(".modify honor "..tbl["honor"], "SAY", nil, nil);
+				for tid, _ in pairs(tbl["titles"]) do
+					SendChatMessage(".titles add "..tid, "SAY", nil, nil);
+				end
+				SendChatMessage(".honor add "..tbl["honor"], "SAY", nil, nil);
 				SendChatMessage(".modify arena "..tbl["arenapoints"], "SAY", nil, nil);
 				SendChatMessage(".levelup "..tbl["level"]-1, "SAY", nil, nil);
+			elseif section=="achievement" then
+				for _ , achiev in pairs(tbl) do
+					if achiev ~= nil then
+						SendChatMessage(".achievement add "..achiev["id"], "SAY", nil, nil);
+					end
+				end
 			elseif section == "rep" then
 				local fid = "0";
-					
+				for _ , faction in ipairs(tbl) do
+					if faction ~= nil then
+						fid = private.GetFactionID(faction["name"]);
+						SendChatMessage(".modify rep "..fid.." "..faction[value], "SAY", nil, nil);
+					end
+				end					
+			elseif section == "bag" then
+				local count = 0;
+				local sItems = "";
+				for _ , item in pairs(tbl) do
+					sItems = sItems..item["entry"]..":"..item["count"].." ";
+					count = count + 1;
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+						sItems="";
+					end
+					if item["gem1"]~="0" then
+						sItems = sItems..item["gem1"].." ";
+						count = count + 1;
+					end
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+						sItems="";
+					end
+					if item["gem2"]~="0" then
+						sItems = sItems..item["gem2"].." ";
+						count = count + 1;
+					end
+					if (count==12) then 
+						private.sendItems(sItems);
+						count=0;
+						sItems="";
+					end
+					if item["gem3"]~="0" then
+						sItems = sItems..item["gem3"].." ";
+						count = count + 1;
+					end
+				end
 			elseif
 			end
 		end
