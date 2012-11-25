@@ -1,3 +1,4 @@
+## Interface: 30300
 ## Title: |c0080ff80Char|r|cFFE0E080Dump|r
 ## Author: Viyy & unknown man
 ## Notes: |TEnvironments\Stars\Nexus_data_curtain_blur:180:120|t Special for LetsWoW.ru

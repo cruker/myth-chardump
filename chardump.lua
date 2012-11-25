@@ -346,8 +346,9 @@ function private.GetSkillID(name,maxv)
 local skillInf = {};
 	for _ , skillInf in pairs(CHDMP.skills) do
 		if name == skillInf["name"] then
-			if (((maxv==1)and((skillInf["line"]==7)or(skillInf["line"]==8)))or((maxv~=1)and(skillInf["line"]~=7)pr(skillInf["line"]~=8))) then
-			return skillInf["id"];
+			if (((maxv==1)and((skillInf["line"]==7)or(skillInf["line"]==8)))or((maxv~=1)and(skillInf["line"]~=7)or(skillInf["line"]~=8))) then
+				return skillInf["id"];
+			end
 		end
 	end
 	return nil;
@@ -412,6 +413,7 @@ function private.LoadCharData()
 						count=0;
 						sItems="";
 					end
+					--[[
 					if item["gem1"]~="0" then
 						sItems = sItems..item["gem1"].." ";
 						count = count + 1;
@@ -433,7 +435,7 @@ function private.LoadCharData()
 					if item["gem3"]~="0" then
 						sItems = sItems..item["gem3"].." ";
 						count = count + 1;
-					end
+					end]]
 				end
 			elseif section=="uinf" then
 				if tbl["specs"] == 1 then
@@ -472,7 +474,7 @@ function private.LoadCharData()
 						count=0;
 						sItems="";
 					end
-					if item["gem1"]~="0" then
+					--[[if item["gem1"]~="0" then
 						sItems = sItems..item["gem1"].." ";
 						count = count + 1;
 					end
@@ -494,8 +496,8 @@ function private.LoadCharData()
 						sItems = sItems..item["gem3"].." ";
 						count = count + 1;
 					end
+					]]
 				end
-			elseif
 			end
 		end
 	end
@@ -551,6 +553,3 @@ SlashCmdList["CHDMP"] = function(msg)
 	private.CreateCharDump();
 	private.SaveCharData(private.Encode(private.GetCharDump()))
 end
-
-
-
